@@ -19,13 +19,13 @@ utils.extend(DaysPanel.prototype, {
   },
   _renderHead: function () {
     this.picker.head.innerHTML = (
-      '<div class="picker-year" data-click="toYears" data-active="active">' + this.picker.dateTime.parsedNow.year + '</div>' +
+      '<div class="picker-year" data-click="toYears" data-active="active">' + this.picker.dateTime.parsedNow.year + '<span class="picker-year-tip">点击选择年份</span></div>' +
       '<div class="picker-date picker-head-active" data-click="toMonths" data-active="active">' +
-        utils.formatDate(
-          this.picker.dateTime.now,
-          this.picker.config.MDW.replace('D', '#')
-        ).replace('#', this.picker.config.day[this.picker.dateTime.parsedNow.day]) +
-      '</div>'
+      utils.formatDate(
+        this.picker.dateTime.now,
+        this.picker.config.MDW.replace('D', '#')
+      ).replace('#', this.picker.config.day[this.picker.dateTime.parsedNow.day]) +
+      '<span class="picker-year-tip">点击选择月份</span></div>'
     )
   },
   afterRender: function () {
@@ -171,40 +171,40 @@ function buildCalendar (datetime, config, cls) {
   cls = ' picker-bdy-' + cls
   return (
     '<div class="picker-bdy' + cls + '">' +
-      '<div class="date-picker-title">' + utils.formatDate(datetime.now, config.YM) + '</div>' +
-      '<div class="date-picker-days">' +
-        '<div class="date-picker-days-title">' +
-          config.shortDay.map(function (d) {
-            return '<i>' + d + '</i>'
-          }).join('') +
-        '</div>' +
-        '<div class="date-picker-days-bdy">' +
-          datetime.getRows().map(function (row) {
-            return (
-              '<div class="picker-row">' +
-                row.map(function (d) {
-                  var klass = parsedCurrent.year === parsedNow.year && parsedCurrent.month === parsedNow.month && d === parsedNow.date ? 'picker-now' : ''
-                  if (d === parsedCurrent.date) {
-                    if (klass) {
-                      klass += ' picker-active'
-                    } else {
-                      klass = 'picker-active'
-                    }
-                  }
-                  if (klass) {
-                    klass = ' class="' + klass + '"'
-                  }
-                  var attr = ' data-val="' + d + '" '
-                  if (d) {
-                    attr += 'data-active="active" data-click="selV" data-val="' + d + '"'
-                  }
-                  return '<i' + attr + klass + '><span>' + d + '</span></i>'
-                }).join('') +
-              '</div>'
-            )
-          }).join('') +
-        '</div>' +
-      '</div>' +
+    '<div class="date-picker-title">' + utils.formatDate(datetime.now, config.YM) + '</div>' +
+    '<div class="date-picker-days">' +
+    '<div class="date-picker-days-title">' +
+    config.shortDay.map(function (d) {
+      return '<i>' + d + '</i>'
+    }).join('') +
+    '</div>' +
+    '<div class="date-picker-days-bdy">' +
+    datetime.getRows().map(function (row) {
+      return (
+        '<div class="picker-row">' +
+        row.map(function (d) {
+          var klass = parsedCurrent.year === parsedNow.year && parsedCurrent.month === parsedNow.month && d === parsedNow.date ? 'picker-now' : ''
+          if (d === parsedCurrent.date) {
+            if (klass) {
+              klass += ' picker-active'
+            } else {
+              klass = 'picker-active'
+            }
+          }
+          if (klass) {
+            klass = ' class="' + klass + '"'
+          }
+          var attr = ' data-val="' + d + '" '
+          if (d) {
+            attr += 'data-active="active" data-click="selV" data-val="' + d + '"'
+          }
+          return '<i' + attr + klass + '><span>' + d + '</span></i>'
+        }).join('') +
+        '</div>'
+      )
+    }).join('') +
+    '</div>' +
+    '</div>' +
     '</div>'
   )
 }
